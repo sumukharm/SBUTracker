@@ -32,8 +32,13 @@ public class GPSService extends Service{
         @Override
         public void onLocationChanged(Location location)
         {
-            Log.e(TAG, "onLocationChanged: " + location);
+            Log.e(TAG, "onLocationChanged: " + location.getLongitude() + location.getLatitude());
             mLastLocation.set(location);
+            DataTable record= new DataTable();
+            record.setLongitude(location.getLongitude());
+            record.setLattitude(location.getLatitude());
+            FeedReaderDbHelper obj=new FeedReaderDbHelper(GPSService.this);
+            obj.insert(record);
         }
 
         @Override
